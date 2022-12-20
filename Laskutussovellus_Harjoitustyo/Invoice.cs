@@ -3,33 +3,88 @@
     /// Luokka laskun tietoja ja rivejä varten.
     /// </summary>
     internal class Invoice {
+        private readonly List<InvoiceLine> lines = new List<InvoiceLine>();
+
         public int ID { get; private set; } = -1;
         public DateOnly Date { get; private set; }
         public DateOnly DueDate { get; private set; }
         public Address BillerAddress { get; private set; }
         public Address CustomerAddress { get; private set; }
+        public string Details { get; private set; } = string.Empty;
         public double Total { get; private set; } = -1;
-        private readonly List<InvoiceLine> lines = new List<InvoiceLine>();
 
         /// <summary>
-        /// Konstruktori jonka avulla luodaan uusi lasku. Asetetaan eräpäivä ja asiakkaan osoite.
+        /// Luo uuden laskun eräpäivällä, asiakkaan osoitteella ja lisätiedoilla.
+        /// Asettaa automaattisesti nykyisen päivämäärän ja laskuttajan osoitteen.
         /// </summary>
         /// <param name="dueDate">Laskun eräpäivä</param>
         /// <param name="customerAddress">Asiakkaan osoite</param>
-        public Invoice(DateOnly dueDate, Address customerAddress) {
+        /// <param name="details">Lisätiedot</param>
+        public Invoice(DateOnly dueDate, Address customerAddress, string details) {
             Date = DateOnly.FromDateTime(DateTime.Now);
             DueDate = dueDate;
-            BillerAddress = Biller.Address;
+
             CustomerAddress = customerAddress;
-            InvoiceRegister.AddInvoice(this);
+            BillerAddress = Biller.Address;
+
+            Details = details;
         }
 
         /// <summary>
-        /// Metodi jonka avulla laskuun voi lisätä uuden laskurivin.
+        /// Lisää laskuun uuden laskurivin ja päivittää samalla laskun kokonaissumman.
         /// </summary>
         /// <param name="line">Uusi laskurivi mikä lisätään laskuun.</param>
         public void AddLine(InvoiceLine line) {
             lines.Add(line);
+            CalculateTotal();
+        }
+
+        /// <summary>
+        /// Asettaa laskun yksilöivän numeron.
+        /// </summary>
+        /// <param name="id">Yksilöivä numero.</param>
+        public void SetID(int id) {
+            if (ID == -1) {
+                ID = id;
+            }
+        }
+
+        /// <summary>
+        /// Muotoilee laskun tiedot.
+        /// </summary>
+        /// <returns>Laskun tiedot stringinä.</returns>
+        public override string ToString() {
+            string[] billerAddress = BillerAddress.GetAddressLines();
+            string[] customerAddress = CustomerAddress.GetAddressLines();
+
+            string info = $"Laskuttaja\r\n" +
+                $"{billerAddress[0]}\t\t\t\tPäiväys: {Date}\r\n" +
+                $"{billerAddress[1]}\t\t\t\tLaskun numero: {ID}\r\n" +
+                $"{billerAddress[2]}\t\t\t\tEräpäivä: {DueDate}\r\n\r\n" +
+                $"Asiakas\r\n" +
+                $"{customerAddress[0]}\r\n" +
+                $"{customerAddress[1]}\r\n" +
+                $"{customerAddress[2]}\r\n\r\n" +
+                $"Lisätiedot: {Details}\r\n" +
+                $"-------------------------------------------------------------------------\r\n" +
+                $"Tuote\tMäärä\tYksikkö\tA-hinta\tYhteensä\t\r\n";
+
+            foreach (var line in lines) {
+                info += line.ToString() + "\r\n";
+            }
+
+            info += $"\t\t\t\t\t\t\t\t\t\tYHTEENSÄ\t{Total}";
+
+            return info;
+        }
+
+        /// <summary>
+        /// Laskee laskun kokonaissumman.
+        /// </summary>
+        private void CalculateTotal() { // metodi on yksityinen, sillä sitä käytetään vain sisäisesti.
+            foreach (var line in lines) {
+
+            }
         }
     }
 }

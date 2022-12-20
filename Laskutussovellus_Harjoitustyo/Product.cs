@@ -8,7 +8,7 @@
         public double PricePerUnit { get; private set; }
 
         /// <summary>
-        /// Konstruktori minkä avulla syötetään tuotetiedot tuotteelle.
+        /// Luo uuden tuotteen tuotekoodilla, yksiköllä ja a-hinnalla.
         /// </summary>
         /// <param name="code">Tuotekoodi</param>
         /// <param name="unit">Yksikkö (kpl, m)</param>
@@ -17,6 +17,14 @@
             Code = code;
             Unit = unit;
             PricePerUnit = pricePerUnit;
+        }
+
+        /// <summary>
+        /// Muotoilee tuotteen tiedot.
+        /// </summary>
+        /// <returns>Tuotteen tiedot stringinä.</returns>
+        public override string ToString() {
+            return "Tuotekoodi: " + Code + "Yksikkö: " + Unit + "A-hinta: " + PricePerUnit;
         }
     }
 }

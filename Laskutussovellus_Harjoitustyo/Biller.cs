@@ -2,7 +2,7 @@
     /// <summary>
     /// Luokka laskuttajan tiedoille.
     /// </summary>
-    internal static class Biller {
+    internal static class Biller { // staattinen luokka yrityksen osoitetiedoille, sillä tätä sovellusta tehdään yhden sovelluksen käyttöön
         /// <summary>
         /// Laskuttajan osoitetiedot.
         /// </summary>

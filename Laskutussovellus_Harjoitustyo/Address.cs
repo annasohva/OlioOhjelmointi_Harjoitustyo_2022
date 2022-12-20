@@ -9,7 +9,7 @@
         public string City { get; private set; } = string.Empty;
 
         /// <summary>
-        /// Konstruktori jonka avulla asetetaan osoitetiedot.
+        /// Luo uuden osoitetiedon nimellä, katuosoitteella, postinumerolla ja postitoimipaikalla.
         /// </summary>
         /// <param name="name">Yrityksen tai henkilön nimi</param>
         /// <param name="streetAddress">Katuosoite</param>
@@ -21,7 +21,7 @@
         }
 
         /// <summary>
-        /// Metodi jonka avulla muutetaan osoite.
+        /// Muuttaa osoitetiedoista katuosoitteen, postinumeron ja postitoimipaikan.
         /// </summary>
         /// <param name="streetAddress">Katuosoite</param>
         /// <param name="postalCode">Postinumero</param>
@@ -33,7 +33,7 @@
         }
 
         /// <summary>
-        /// Metodi jonka avulla muutetaan osoitetietoihin nimi.
+        /// Muuttaa osoitetiedoista nimen.
         /// </summary>
         /// <param name="name">Yrityksen tai henkilön nimi.</param>
         public void ChangeName(string name) {
@@ -41,7 +41,7 @@
         }
 
         /// <summary>
-        /// Metodi jonka avulla haetaan osoiterivit.
+        /// Hakee osoiterivit taulukkoon.
         /// </summary>
         /// <returns>String-taulukko: [0]: yrityksen tai henkilön nimi, [1]: katuosoite, [2]: postinumero + " " + postitoimipaikka</returns>
         public string[] GetAddressLines() {

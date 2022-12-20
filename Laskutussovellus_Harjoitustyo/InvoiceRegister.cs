@@ -2,23 +2,14 @@
     /// <summary>
     /// Luokka joka sisältää kaikki laskut.
     /// </summary>
-    internal static class InvoiceRegister {
-        private readonly static List<Invoice> invoices = new List<Invoice>(); // lista on yksityinen ja readonly, että sitä ei poisteta vahingossa
-
+    internal class InvoiceRegister : BaseRegister<Invoice> {
         /// <summary>
-        /// Metodin avulla lisätään uusi lasku rekisteriin.
+        /// Lisää uuden laskun rekisteriin ja asettaa laskulle yksilöivän numeron.
         /// </summary>
         /// <param name="invoice">Lasku joka lisätään rekisteriin.</param>
-        public static void AddInvoice(Invoice invoice) {
-            invoices.Add(invoice);
-        }
-
-        /// <summary>
-        /// Metodin avulla haetaan kaikki laskutiedot.
-        /// </summary>
-        /// <returns>Lista joka sisältää kaikki laskutiedot.</returns>
-        public static IList<Invoice> GetInvoices() {
-            return invoices.AsReadOnly();
+        public override void AddItem(Invoice invoice) {
+            base.AddItem(invoice);
+            invoice.SetID(items.Count + 1);
         }
     }
 }
