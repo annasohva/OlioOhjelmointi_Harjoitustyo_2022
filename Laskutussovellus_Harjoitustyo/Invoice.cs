@@ -31,12 +31,12 @@
         }
 
         /// <summary>
-        /// Lisää laskuun uuden laskurivin ja päivittää samalla laskun kokonaissumman.
+        /// Lisää laskuun uuden laskurivin ja päivittää laskun kokonaissumman.
         /// </summary>
         /// <param name="line">Uusi laskurivi mikä lisätään laskuun.</param>
         public void AddLine(InvoiceLine line) {
             lines.Add(line);
-            CalculateTotal();
+            this.Total += line.Total;
         }
 
         /// <summary>
@@ -57,34 +57,25 @@
             string[] billerAddress = BillerAddress.GetAddressLines();
             string[] customerAddress = CustomerAddress.GetAddressLines();
 
-            string info = $"Laskuttaja\r\n" +
-                $"{billerAddress[0]}\t\t\t\tPäiväys: {Date}\r\n" +
-                $"{billerAddress[1]}\t\t\t\tLaskun numero: {ID}\r\n" +
-                $"{billerAddress[2]}\t\t\t\tEräpäivä: {DueDate}\r\n\r\n" +
-                $"Asiakas\r\n" +
-                $"{customerAddress[0]}\r\n" +
-                $"{customerAddress[1]}\r\n" +
-                $"{customerAddress[2]}\r\n\r\n" +
-                $"Lisätiedot: {Details}\r\n" +
+            string info = $" Laskuttaja\r\n" +
+                $" {billerAddress[0]}\t\t\t\tPäiväys: {Date}\r\n" +
+                $" {billerAddress[1]}\t\t\t\tLaskun numero: {ID}\r\n" +
+                $" {billerAddress[2]}\t\t\t\tEräpäivä: {DueDate}\r\n\r\n" +
+                $" Asiakas\r\n" +
+                $" {customerAddress[0]}\r\n" +
+                $" {customerAddress[1]}\r\n" +
+                $" {customerAddress[2]}\r\n\r\n" +
+                $" Lisätiedot: {Details}\r\n" +
                 $"-------------------------------------------------------------------------\r\n" +
-                $"Tuote\tMäärä\tYksikkö\tA-hinta\tYhteensä\t\r\n";
+                $" Tuote\tMäärä\tYksikkö\tA-hinta\tYhteensä\t\r\n";
 
             foreach (var line in lines) {
                 info += line.ToString() + "\r\n";
             }
 
-            info += $"\t\t\t\t\t\t\t\t\t\tYHTEENSÄ\t{Total}";
+            info += $"\t\t\t\t\t\t\t\t\t\tYHTEENSÄ\t{Total} €";
 
             return info;
-        }
-
-        /// <summary>
-        /// Laskee laskun kokonaissumman.
-        /// </summary>
-        private void CalculateTotal() { // metodi on yksityinen, sillä sitä käytetään vain sisäisesti.
-            foreach (var line in lines) {
-
-            }
         }
     }
 }

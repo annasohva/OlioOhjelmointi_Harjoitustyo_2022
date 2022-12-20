@@ -25,18 +25,18 @@
         /// Hakee kaikkien objektien tiedot.
         /// </summary>
         /// <returns>String-taulukko mikä sisältää kaikkien objektien tiedot.</returns>
-        public virtual string[] GetItems() {
-            string[] itemsToString = Array.Empty<string>();
+        public virtual string[] GetItemsInfo() {
+            string[] itemsAsString = Array.Empty<string>();
 
             if (items.Count != 0) {
-                itemsToString = new string[items.Count];
+                itemsAsString = new string[items.Count];
 
-                for (int i = 0; i < itemsToString.Length; i++) {
-                    itemsToString[i] = items[i].ToString();
+                for (int i = 0; i < items.Count; i++) {
+                    itemsAsString[i] = items[i].ToString();
                 }
             }
 
-            return itemsToString;
+            return itemsAsString;
         }
     }
 }
