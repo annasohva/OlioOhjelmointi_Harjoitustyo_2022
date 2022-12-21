@@ -9,7 +9,7 @@
         public static Address Address { get; private set; }
 
         static Biller() {
-            Address = new Address("Rakennus Oy", "Karjalankatu 3", 80200, "Joensuu");
+            Address = new Address("Rakennus Oy", "Karjalankatu 3", "80200", "Joensuu");
         }
     }
 }

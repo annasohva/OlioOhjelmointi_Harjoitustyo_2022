@@ -23,7 +23,7 @@
         /// </summary>
         /// <returns>Muotoillun tuoterivin stringinä.</returns>
         public override string ToString() {
-            return $" {Product.Code}\t{Quantity}\t{Product.Unit}\t{Product.PricePerUnit}\t{Total}";
+            return $" {Product.Code}\t\t{Quantity}\t\t{Product.Unit}\t\t{Product.PricePerUnit}\t\t{Math.Round(Total, 2)}";
         }
     }
 }

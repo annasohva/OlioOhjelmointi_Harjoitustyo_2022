@@ -20,7 +20,7 @@
         /// <param name="dueDate">Laskun eräpäivä</param>
         /// <param name="customerAddress">Asiakkaan osoite</param>
         /// <param name="details">Lisätiedot</param>
-        public Invoice(DateOnly dueDate, Address customerAddress, string details) {
+        public Invoice(DateOnly dueDate, Address customerAddress, string details = "") {
             Date = DateOnly.FromDateTime(DateTime.Now);
             DueDate = dueDate;
 
@@ -57,23 +57,25 @@
             string[] billerAddress = BillerAddress.GetAddressLines();
             string[] customerAddress = CustomerAddress.GetAddressLines();
 
-            string info = $" Laskuttaja\r\n" +
+            string info = $" Laskuttaja:\r\n" +
                 $" {billerAddress[0]}\t\t\t\tPäiväys: {Date}\r\n" +
                 $" {billerAddress[1]}\t\t\t\tLaskun numero: {ID}\r\n" +
                 $" {billerAddress[2]}\t\t\t\tEräpäivä: {DueDate}\r\n\r\n" +
-                $" Asiakas\r\n" +
+                $" Asiakas:\r\n" +
                 $" {customerAddress[0]}\r\n" +
                 $" {customerAddress[1]}\r\n" +
                 $" {customerAddress[2]}\r\n\r\n" +
                 $" Lisätiedot: {Details}\r\n" +
                 $"-------------------------------------------------------------------------\r\n" +
-                $" Tuote\tMäärä\tYksikkö\tA-hinta\tYhteensä\t\r\n";
+                $" Tuote\t\tMäärä\t\tYksikkö\t\tA-hinta\t\tYhteensä\r\n" +
+                $"-------------------------------------------------------------------------\r\n";
 
             foreach (var line in lines) {
                 info += line.ToString() + "\r\n";
             }
 
-            info += $"\t\t\t\t\t\t\t\t\t\tYHTEENSÄ\t{Total} €";
+            info += $"\t\t\t\t\t\tYHTEENSÄ\t{Math.Round(Total,2)} e\r\n" +
+                $"-------------------------------------------------------------------------";
 
             return info;
         }

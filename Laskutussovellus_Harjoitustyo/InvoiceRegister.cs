@@ -10,8 +10,24 @@
         public override void AddItem(Invoice invoice) {
             if (items.Contains(invoice) == false) {
                 base.AddItem(invoice);
-                invoice.SetID(items.Count + 1);
+                invoice.SetID(items.Count);
             }
+        }
+
+        /// <summary>
+        /// Hakee laskun käyttäen yksilöivää numeroa.
+        /// </summary>
+        /// <param name="id">Laskun yksilöivä numero.</param>
+        /// <returns>Jos löytyy, niin lasku, jos ei niin null.</returns>
+        public override Invoice? GetItem(string id) {
+            foreach (var invoice in items) {
+
+                if (int.Parse(id) == invoice.ID) {
+                    return invoice;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -20,10 +36,10 @@
         /// <param name="identifier">Laskun yksilöivä numero. (ID)</param>
         /// <returns>Jos lasku löytyi, niin laskun tiedot stringinä. Jos ei, niin tyhjä string.</returns>
         public string GetItemInfo(int identifier) {
-            foreach (var item in items) {
+            foreach (var invoice in items) {
 
-                if (identifier == item.ID) {
-                    return item.ToString();
+                if (identifier == invoice.ID) {
+                    return invoice.ToString();
                 }
             }
 
@@ -38,12 +54,10 @@
         public string[] GetItemsInfo(string productCode) {
             List<string> invoices = new List<string>();
 
-            for(int i = 0; i < items.Count; i++) {
-                foreach (var invoice in items) {
+            foreach (var invoice in items) {
 
-                    if (invoice.ToString().Contains($" productCode\t")) {
-                        invoices.Add(invoice.ToString());
-                    }
+                if (invoice.ToString().Contains($" productCode\t")) {
+                    invoices.Add(invoice.ToString());
                 }
             }
 
