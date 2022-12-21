@@ -15,27 +15,11 @@
         }
 
         /// <summary>
-        /// Hakee laskun käyttäen yksilöivää numeroa.
-        /// </summary>
-        /// <param name="id">Laskun yksilöivä numero.</param>
-        /// <returns>Jos löytyy, niin lasku, jos ei niin null.</returns>
-        public override Invoice? GetItem(string id) {
-            foreach (var invoice in items) {
-
-                if (int.Parse(id) == invoice.ID) {
-                    return invoice;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
         /// Etsii tietyn laskun tiedot käyttäen yksilöivää numeroa.
         /// </summary>
         /// <param name="identifier">Laskun yksilöivä numero. (ID)</param>
         /// <returns>Jos lasku löytyi, niin laskun tiedot stringinä. Jos ei, niin tyhjä string.</returns>
-        public string GetItemInfo(int identifier) {
+        public string GetOneItemInfo(int identifier) {
             foreach (var invoice in items) {
 
                 if (identifier == invoice.ID) {
@@ -56,7 +40,7 @@
 
             foreach (var invoice in items) {
 
-                if (invoice.ToString().Contains($" productCode\t")) {
+                if (invoice.ToString().Contains($" {productCode} ")) {
                     invoices.Add(invoice.ToString());
                 }
             }
@@ -82,7 +66,7 @@
             return invoices.ToArray();
         }
 
-        private bool AddressMatches(Address address1, Address address2) {
+        private bool AddressMatches(Address address1, Address address2) { // yksityinen metodi osoitteiden vertailuun
             if (address1.Name == address2.Name && address1.StreetAddress == address2.StreetAddress && address1.PostalCode == address2.PostalCode) {
                 return true;
             }

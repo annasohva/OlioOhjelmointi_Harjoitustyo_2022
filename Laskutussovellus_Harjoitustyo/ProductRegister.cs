@@ -28,7 +28,7 @@
         /// </summary>
         /// <param name="productCode">Tuotekoodi.</param>
         /// <returns>Jos löytyy, niin tuote, jos ei niin null.</returns>
-        public override Product? GetItem(string productCode) {
+        public Product? GetItem(string productCode) {
             foreach (var product in items) {
 
                 if (productCode == product.Code) {

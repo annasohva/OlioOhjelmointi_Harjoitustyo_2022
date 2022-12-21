@@ -22,17 +22,10 @@
         }
 
         /// <summary>
-        /// Hakee tietyn objektin.
-        /// </summary>
-        /// <param name="identifier">Yksilöivä arvo millä haetaan.</param>
-        /// <returns>Objekti joka vastaa yksilöivää arvoa. Jos objektia ei löydy palauttaa null.</returns>
-        public abstract T? GetItem(string identifier);
-
-        /// <summary>
         /// Hakee kaikkien objektien tiedot.
         /// </summary>
         /// <returns>String-taulukko mikä sisältää kaikkien objektien tiedot. Tyhjän taulukon jos rekisterissä ei ole objekteja.</returns>
-        public virtual string[] GetItemsInfo() {
+        public virtual string[] GetAllItemInfo() {
             string[] itemsAsString = Array.Empty<string>();
 
             if (items.Count != 0) {

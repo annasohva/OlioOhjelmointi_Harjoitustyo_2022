@@ -14,20 +14,33 @@
         public double Total { get; private set; } = -1;
 
         /// <summary>
-        /// Luo uuden laskun eräpäivällä, asiakkaan osoitteella ja lisätiedoilla.
-        /// Asettaa automaattisesti nykyisen päivämäärän ja laskuttajan osoitteen.
+        /// Luo uuden laskun parametreinaan asiakkaan osoite ja vaihtoehtoiset lisätiedot.
+        /// Asettaa automaattisesti nykyisen päivämäärän, eräpäivän 30 päivän päähän ja laskuttajan osoitteen.
         /// </summary>
-        /// <param name="dueDate">Laskun eräpäivä</param>
         /// <param name="customerAddress">Asiakkaan osoite</param>
-        /// <param name="details">Lisätiedot</param>
-        public Invoice(DateOnly dueDate, Address customerAddress, string details = "") {
-            Date = DateOnly.FromDateTime(DateTime.Now);
-            DueDate = dueDate;
+        /// <param name="details">Vapaaehtoiset lisätiedot</param>
+        public Invoice(Address customerAddress, string details = "") {
+            Date = DateOnly.FromDateTime(DateTime.Now); // laskun päiväys on nykyinen päivä
+            DueDate = DateOnly.FromDateTime(DateTime.Now).AddDays(30); // laskun eräpäivä on 30 päivän päästä
 
             CustomerAddress = customerAddress;
             BillerAddress = Biller.Address;
 
             Details = details;
+        }
+
+        /// <summary>
+        /// Luo uuden laskun parametreinaan työn hinta ja kesto, asiakkaan osoite ja mahdolliset lisätiedot.
+        /// Asettaa automaattisesti nykyisen päivämäärän, eräpäivän 30 päivän päähän ja laskuttajan osoitteen.
+        /// </summary>
+        /// <param name="workQuantity">Työn kesto-</param>
+        /// <param name="workPricePerHour">Työn hinta per tunti</param>
+        /// <param name="customerAddress">Asiakkaan osoite</param>
+        /// <param name="details">Vapaaehtoiset lisätiedot</param>
+        public Invoice(double workQuantity, double workPricePerHour, Address customerAddress, string details = "") : this(customerAddress, details) {
+            Product work = new Product("Työ", "t", workPricePerHour);
+            var line = new InvoiceLine(work, workQuantity);
+            AddLine(line);
         }
 
         /// <summary>
@@ -40,7 +53,15 @@
         }
 
         /// <summary>
-        /// Asettaa laskun yksilöivän numeron.
+        /// Muuttaa laskun eräpäivää.
+        /// </summary>
+        /// <param name="date">Laskun uusi eräpäivä.</param>
+        public void ChangeDueDate(DateOnly date) {
+            DueDate = date; // toiminnallisuutta ei ole toteutettu, sillä sitä ei vaadittu
+        }
+
+        /// <summary>
+        /// Asettaa laskun yksilöivän numeron. Toimii vain jos ID on oletusarvossa eli -1.
         /// </summary>
         /// <param name="id">Yksilöivä numero.</param>
         public void SetID(int id) {
@@ -57,7 +78,8 @@
             string[] billerAddress = BillerAddress.GetAddressLines();
             string[] customerAddress = CustomerAddress.GetAddressLines();
 
-            string info = $" Laskuttaja:\r\n" +
+            string info = $"-------------------------------------------------------------------------\r\n" +
+                $" Laskuttaja:\r\n" +
                 $" {billerAddress[0]}\t\t\t\tPäiväys: {Date}\r\n" +
                 $" {billerAddress[1]}\t\t\t\tLaskun numero: {ID}\r\n" +
                 $" {billerAddress[2]}\t\t\t\tEräpäivä: {DueDate}\r\n\r\n" +
@@ -74,7 +96,7 @@
                 info += line.ToString() + "\r\n";
             }
 
-            info += $"\t\t\t\t\t\tYHTEENSÄ\t{Math.Round(Total,2)} e\r\n" +
+            info += $"\r\n\t\t\t\t\t\tYHTEENSÄ\t{Math.Round(Total,2)} e\r\n" +
                 $"-------------------------------------------------------------------------";
 
             return info;

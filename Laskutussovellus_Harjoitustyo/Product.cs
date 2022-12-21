@@ -24,7 +24,7 @@
         /// </summary>
         /// <returns>Tuotteen tiedot stringinä.</returns>
         public override string ToString() {
-            return "Tuotekoodi: " + Code + "Yksikkö: " + Unit + "A-hinta: " + PricePerUnit;
+            return String.Format(" {0,-14} {1}\t\t{2}", Code, Unit, PricePerUnit);
         }
     }
 }
