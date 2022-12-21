@@ -2,7 +2,7 @@
     /// <summary>
     /// Luokka joka sisältää kaikki laskut.
     /// </summary>
-    internal class InvoiceRegister : BaseRegister<Invoice> {
+    internal class InvoiceRegister : BaseRegister<Invoice> { // tässä luokassa metodien nimet vähän kökköjä
         /// <summary>
         /// Lisää uuden laskun rekisteriin ja asettaa laskulle yksilöivän numeron.
         /// </summary>

@@ -10,7 +10,7 @@
         public DateOnly DueDate { get; private set; }
         public Address BillerAddress { get; private set; }
         public Address CustomerAddress { get; private set; }
-        public string Details { get; private set; } = string.Empty;
+        public string Details { get; set; } = string.Empty;
         public double Total { get; private set; } = -1;
 
         /// <summary>
